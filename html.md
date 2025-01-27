@@ -24,7 +24,7 @@ DOCTYPE determines the underlying grammar for parsing the document, here: HTML5
 <head>
     <meta charset="UTF-8">
     <!-- viewport verhindert kleiner Skalierung auf mobilen Geräten -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
+    <meta name="viewport" content="width=device-x, initial-scale=1.0, user-scalable=no"> 
     <!-- initial-scale: Zoomgrad, user-scalable: kann man zoomen -->
     <meta name="robots" content="noindex,nofollow">
     <meta name="author" content="Steven">
