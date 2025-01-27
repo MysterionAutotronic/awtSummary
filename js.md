@@ -302,6 +302,7 @@ el.insertBefore(node, reference); // insert child before a specific node
 
 let form = document.getElementById("form");
 form.reset();
+form.nameAttributeOfValue;
 ```
 
 ### Event Listeners
