@@ -207,6 +207,7 @@ DOCTYPE determines the underlying grammar for parsing the document, here: HTML5
 <div id="id_name" class="class_name"></div>
 <!--inline-->
 <div style="color: red; border: 1px solid black"></div>
+```
 
 ### JS Usage
 ```html
