@@ -4,9 +4,18 @@
         "de-de"
     ],
     "words": [
+        "datatypes",
         "flexbox",
+        "keyrelease",
+        "keyup",
+        "mouseclick",
+        "mousemove",
+        "objkeys",
+        "objvalues",
         "pandoc",
         "pdflatex",
+        "writeln",
+        "xmlhttp",
         "Zoomgrad"
     ]
 }
