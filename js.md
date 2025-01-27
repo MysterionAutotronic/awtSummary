@@ -299,19 +299,24 @@ el.innerHTML = "<div> some text </div>";
 el.appendChild(node); // add child at the end inside parent
 el.removeChild(node);
 el.insertBefore(node, reference); // insert child before a specific node
+
+let form = document.getElementById("form");
+form.reset();
 ```
 
 ### Event Listeners
 ```javascript
 element.addEventListener("click", () => {
     // other event listeners: "submit", "mouse+over/out/up/down"
-    // "keyup" keyrelease, "keydown" keypress, "input" for chars & numbers only
+    // "keyup", "keyrelease", "keydown" keypress, "input" for chars & numbers only
     // "onfocus", "resize", "mousemove", "onload"
 
     // html based version works with <div onclick="mouseclick(this)"></div>
     // function mouseclick(element) { ... }
 });
 ```
+
+###
 
 ## Fetch API
 ```javascript
