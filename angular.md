@@ -728,7 +728,14 @@ export class TestComponent {
     </p>
     }
 </form>
+```
 
+#### Typescript:
+
+```typescript
+// reactive forms
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ValidatorFn } from '@angular/forms'; // reactive form validator
 ```
 
 ## Subcomponents
