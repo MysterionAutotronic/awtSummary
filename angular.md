@@ -409,6 +409,9 @@ export class TestComponent {
       console.log('Form Submitted!', form.value.inputEmail);
       form.reset();
   }
+  public keys(form: any): string[] {
+    return Object.keys(form.controls); // returns object names as iterable
+  }
 }
 ```
 
@@ -418,6 +421,31 @@ export class TestComponent {
 - for complex and dynamic forms
 - better scalability and testability
 - form login is implemented in component class
+
+#### HTML:
+
+```html
+<form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+    <input formControlName="amount" type="number" required>
+    @if (amount?.touched && amount?.invalid) {
+    <p>
+        @if (amount?.errors?.['required']) {
+            <span>Amount is required. </span>
+        }
+        @if (amount?.errors?.['minZero']) {
+            <span>Please enter a number > 0.</span>
+        }
+    </p>
+    }
+</form>
+
+```
+
+## Subcomponents
+
+```html
+<app-test-module name="parameter"></app-test-module>
+```
 
 ## Modules
 
