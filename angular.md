@@ -219,7 +219,9 @@ Router outlet not need if already included in `app.component.html`
 <div [ngClass]="boolean ? 'class1' : 'class2'"></div>
 ```
 
-## TypeScript Structure
+## TypeScript Syntax
+
+### Basics
 
 ```typescript
 import { Component, OnInit, inject } from '@angular/core';
@@ -293,6 +295,17 @@ export class AngularComponent implements OnInit {
     }
 }
 ```
+
+### Services
+
+### Intervals
+
+### Modules
+
+Container that organizes related code.
+- you can define your own modules
+- groups components, services and elements into a *cohesive unit*
+- modular architecture enables **lazy loading**
 
 ## Forms
 
@@ -447,12 +460,9 @@ export class TestComponent {
 <app-test-module name="parameter"></app-test-module>
 ```
 
-## Modules
+```typescript
 
-Container that organizes related code.
-- you can define your own modules
-- groups components, services and elements into a *cohesive unit*
-- modular architecture enables **lazy loading**
+```
 
 ## Component Lifecycle
 
