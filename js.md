@@ -31,6 +31,7 @@ for (let key in obj) {}
 for (let n of numbers) {}
 
 numbers.forEach((number) => { console.log(number); }) // read only
+numbers.forEach((number, index) => { console.log(number, index); }) // read only
 
 while (condition) {}
 
@@ -62,6 +63,11 @@ let [first, second, third, fourth] = persons; // deconstruct
 let arr2 = [1,2,3,4,5];
 arr2.splice(1, 3); // splice on index 1 and remove 3 elements
 // [1, 5]
+
+const numbers = [1, 2, 3, 4];
+const [first, second, third] = numbers;
+const [first2, , third2] = numbers;
+const [first3, ...rest] = numbers;
 ```
 
 ## Strings
@@ -250,6 +256,26 @@ let personAsString = JSON.stringify(person);
 let personAsJSON = JSON.parse(personAsString);
 ```
 
+## Spread Operator
+const source = [1, 2, 3];
+console.log([...source]); // merge objects
+const obj1 = { value: 12.45, unit: 'km/h' };
+const obj2 = { date: new Date(), unit: 'm/s' };
+console.log({ ...obj1, ...obj2 }); // obj2.unit overwrites obj1.unit!
+
+// pass array to function
+function addNumbers(a: number, b: number, c: number): number {
+    return a + b + c;
+
+}const numbers = [1, 2, 3];
+console.log(addNumbers(...numbers)); // Output: 6
+
+// convert string to array
+const greeting = "Hello";
+const characters = [...greeting];
+console.log(characters); // Output: ['H', 'e', 'l', 'l', 'o']
+
+
 ## DOM (document object model)
 
 ### Find Elements
@@ -316,8 +342,6 @@ element.addEventListener("click", () => {
     // function mouseclick(element) { ... }
 });
 ```
-
-###
 
 ## Fetch API
 ```javascript
