@@ -33,8 +33,13 @@ Angular is a web framework for developing fast and reliable web applications bas
 | `./app.routes.ts` | router config |
 | `./app/components/componentName` | component folder |
 | `./app/services/serviceName.ts` | service |
+| `./app/models/modelName.ts` | model |
 
 Component folder contains `.ts`, `.html`, `.spec.ts` & `.css`
+
+### Modules
+
+`./app/module/feature/*` contains a feature module with `component.ts`, `service.ts`, `module.ts` & `feature-routing.ts`
 
 ### /app Code
 
@@ -191,6 +196,7 @@ Router outlet not need if already included in `app.component.html`
     <div></div>
 }
 
+<!-- track helps Angular identify unique items in a collection-->
 @for (item of items; track item;) {} // track without custom id
 @for (item of items; track item.id; let i = $index) {
     <div>
@@ -294,17 +300,91 @@ export class AngularComponent implements OnInit {
     public navigate() {
         this.router.navigate(["/route"]);
     }
+
+    // interval
+    public interval() {
+        const intervalID = setInterval(() => {}, 100); // in milliseconds
+        clearInterval(intervalID);
+    }
 }
 ```
 
-### Services
+### Models
+
+Data definition for components / forms
+- Interfaces
+- Custom types
+- Classes
+
+#### Definition
+
+```typescript
+export class Example {
+    public num: number;
+
+    public constructor(num: number){
+        this.num = num;
+    }
+
+    public dosmth() {
+        return;
+    }
+}
+```
+
+#### Usage
+
+```typescript
+import { Example } from "../../models/Example";
+
+public numbers: Example = new Example(3);
+```
+
+### Modules
+
+Container that organizes related code.
+- You can define your own modules
+- Groups components, services and elements into a *cohesive unit*
+- Modular architecture enables **lazy loading**
+- Modules are reusable
+
+#### Definition
+
+```typescript
+import { NgModule } from '@angular/core';
+
+@NgModule ({
+})
+export class TestModule {
+    public sayHello(): string {
+        return 'Hello World!';
+    }
+}
+```
+
+#### Usage
+
+```typescript
+@Component({
+    imports: [
+        TestModule
+  ],
+});
+export class ComponentLoadsModule() {
+    public ngOnInit() {
+    this.testModule.sayHello()
+  }
+}
+```
+
+## Services
 
 The component uses a service to retrieve photo data from a server
 - A service is an object that only exists once (singleton pattern)
 - To define a service, the decorator "Injectable" is used
 - To use a service, typically the constructor of the using class defines a property of the service type
 
-#### Definition
+### General Definition
 
 ```typescript
 import { Injectable } from '@angular/core';
@@ -320,8 +400,6 @@ export class apiService {
     public constructor(
         private httpClient: HttpClient // get, delete, patch, post, put
     ) { }
-
-
 
     // simple example
     public get(): Observable<number[]> {
@@ -351,7 +429,7 @@ export class apiService {
 }
 ```
 
-#### Usage
+### Usage
 
 ```typescript
 import { apiService } from '../../services/api.service.ts'
@@ -376,14 +454,36 @@ export class Component {
 }
 ```
 
-### Intervals
+### Auth
 
-### Modules
+```typescript
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
-Container that organizes related code.
-- you can define your own modules
-- groups components, services and elements into a *cohesive unit*
-- modular architecture enables **lazy loading**
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) { }
+
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot)
+        : Observable<boolean> | Promise<boolean> | boolean {
+    if (this.authService.isLoggedIn()) {
+      return true;
+    } 
+    else {
+      this.router.navigate(['/login']);
+      return false;
+    }
+  }
+}
+```
+
+### Debounce
+
+
 
 ## Forms
 
