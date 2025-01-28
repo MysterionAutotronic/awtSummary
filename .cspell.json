@@ -4,16 +4,22 @@
         "de-de"
     ],
     "words": [
+        "alnum",
         "datatypes",
+        "dblclick",
         "flexbox",
         "keyrelease",
         "keyup",
         "mouseclick",
+        "mousedown",
         "mousemove",
+        "mouseup",
         "objkeys",
         "objvalues",
         "pandoc",
         "pdflatex",
+        "Rajesh",
+        "usecase",
         "writeln",
         "xmlhttp",
         "Zoomgrad"
