@@ -605,7 +605,6 @@ export class Component() {
         required                            <- !!! Important for errors
         email                               <- !!! for email validation
         (keyup)="onInputChange($event)">
-    </input>
 
         use like this: [(ngModel)]="var_name_in_component"
             - used for bidirectional data binding
@@ -621,7 +620,7 @@ export class Component() {
         ngModel directive only work if ngModel binding has been used
 
     onedirectional binding:
-    <input type="" name="" [ngModel]="number" readonly></input>
+    <input type="" name="" [ngModel]="number" readonly>
         - useful for readonly inputs
 
     event:
