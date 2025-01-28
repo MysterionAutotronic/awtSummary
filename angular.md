@@ -236,10 +236,10 @@ import { TestModuleComponent } from '../test-module.component'; // used in html
     selector: 'app-angular', // app-"componentname"
     standalone: true, // if true it does not need to be declared in NgModule
     imports: [
+        // directive have to be imported here explicitly if used besides for typing
         TestModuleComponent, // for custom components
         ngStyle, // for inline styling
         ngClass, // for inline class
-        // directive have to be imported here explicitly if used besides for typing
     ],
     templateUrl: './angular.component.html',
     styleUrls: ['./angular.component.css']
@@ -313,8 +313,9 @@ export class AngularComponent implements OnInit {
         type="email"
         name="inputEmail"
         [(ngModel)]="email"
-        #inputName="ngModel"
-        required
+        #inputEmail="ngModel"
+        required                            <- !!! Important for errors
+        email                               <- !!! for email validation
         (keyup)="onInputChange($event)">
     </input>
 
@@ -322,9 +323,9 @@ export class AngularComponent implements OnInit {
             - used for bidirectional data binding
             - ngModel requires a name attribute
         
-        #inputName="ngModel" 
-            - #inputName is value of name attribute
-            - creates a reference to ngModel directive instance named inputName
+        #inputEmail="ngModel" 
+            - #inputEmail is value of name attribute
+            - creates a reference to ngModel directive instance named inputEmail
             - allows access to properties like pristine, valid, dirty
                 (opposite of pristine, has been modified), 
                 touched (input has been focused, not about modified), errors
@@ -340,15 +341,15 @@ export class AngularComponent implements OnInit {
         - (keyup)="function()"
 
     error box:
-    @if (!(inputName.pristine || inputName.valid)) {
+    @if (!(inputEmail.pristine || inputEmail.valid)) {
         <div>
             pristine ist used if the box hasn't been touched
                 (since empty inputs are considered invalid)
         </div>
-        @if (email.errors?.['required']) {
+        @if (inputEmail.errors?.['required']) {
             <div>ngModule directives auto. generate validators & error objects</div>
         }
-        @if (email.errors?.['email']) {
+        @if (inputEmail.errors?.['email']) {
             <div>Invalid email format!</div>
         }
     }
@@ -376,6 +377,40 @@ export class AngularComponent implements OnInit {
 ```
 
 #### TS:
+
+```typescript
+import { Component } from '@angular/core';
+
+import { FormsModule } from '@angular/forms'; // template driven forms
+import { NgForm } from '@angular/forms'; // template driven + form directive for type
+
+@Component({
+  selector: 'app-test',
+  standalone: true,
+  imports: [
+    FormsModule, // for ngModel binding/directives
+  ],
+  templateUrl: './test.component.html',
+  styleUrl: './test.component.css'
+})
+
+export class TestComponent {
+  public email: string = "";
+
+  public onInputChange(event: any) {
+    // both works
+    console.log(event.target.value);
+    console.log(this.email);
+  }
+
+  // template driven form
+  public formFunction(form: NgForm) {
+      // ngModel obj, cant get form values directly by name attribute
+      console.log('Form Submitted!', form.value.inputEmail);
+      form.reset();
+  }
+}
+```
 
 ### Reactive Forms
 
