@@ -416,7 +416,8 @@ export class apiService {
         const url = "";
         const body = "";
         const observable = new Observable<boolean>(subscriber => {
-            const serverCall = this.httpClient.post(url + "/", body); // this.httpClient.get(url)
+            const serverCall = this.httpClient.post(url + "/", body);
+            // OR this.httpClient.get(url)
             serverCall.subscribe({
                 next: res => {
                     console.log(res);
@@ -463,7 +464,9 @@ export class Component {
 
 ```typescript
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { 
+    CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
