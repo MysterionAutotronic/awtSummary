@@ -716,7 +716,10 @@ export class TestComponent {
 
 ```html
 <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
-    <input formControlName="amount" type="number" required>
+    <input
+        formControlName="amount"    <- sufficient for attribute reference & validation
+        type="number"
+        required>
     @if (amount?.touched && amount?.invalid) {
     <p>
         @if (amount?.errors?.['required']) {
@@ -733,19 +736,107 @@ export class TestComponent {
 #### Typescript:
 
 ```typescript
+import { Component } from '@angular/core';
+
 // reactive forms
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractControl, ValidatorFn } from '@angular/forms'; // reactive form validator
+
+// reactive form validator
+export function minZeroValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const isValid = control.value !== null && control.value > 0;
+      return isValid ? null : { 'minZero': { value: control.value } };
+    };
+}
+
+// meta info
+@Component({
+    selector: 'app-angular',
+    standalone: true,
+    imports: [
+        ReactiveFormsModule, // for reactive forms
+    ],
+    templateUrl: './angular.component.html',
+    styleUrls: ['./angular.component.css']
+})
+export class AngularComponent {
+    reactiveForm: FormGroup; // reactive forms
+
+    public constructor(private formBuilder: FormBuilder) {
+        this.reactiveForm = this.formBuilder.group({
+            // multiple validators
+            amount: ['', [Validators.required, minZeroValidator() ]],
+            status: ['', Validators.required], // single validator
+        });
+    }
+
+    // reactive form
+    public onSubmit() {
+        if (this.reactiveForm.invalid) {
+            console.log(this.reactiveForm.value); // form values
+            console.log(this.reactiveForm.values.amount);
+            console.log(this.reactiveForm.controls['amount']?.errors?.['minZero']);
+        }
+    }
+}
 ```
 
-## Subcomponents
+## Signals
 
-```html
-<app-test-module name="parameter"></app-test-module>
-```
+A **signal** is a wrapper around a value that notifies interested consumers when that value changes.
+Signals can contain any value, from primitives to complex data structures.
+You **read** a signal's value by calling its getter function, which allows Angular to track where the signal is used.
+
+- **Writable** signal: provide an API for updating their values *directly*
+- **Computed** signal: **read-only** signals that derive their value *from other signals*
 
 ```typescript
+import { Component, computed, effect, signal, Signal, WritableSignal } from '@angular/core';
+/*  Signals are a new reactivity model to improve state management. 
+Signals are similar to observables, 
+but they provide a simpler and more explicit mechanism for handling changes in application state. */
 
+@Component({
+  selector: 'app-singals',
+  standalone: true,
+  template: `
+    <div>
+      <h1>Counter: {{ counter() }}</h1>
+      <p>Double: {{ doubleCounter() }}</p>
+      <button (click)="increment()">Increment</button>
+      <button (click)="decrement()">Decrement</button>
+    </div>
+  `,
+})
+export class CounterComponent {
+  // Define a signal to hold the counter state
+  counter: WritableSignal<number> = signal(0);
+
+  // Computed Signals
+  // are read-only signals that derive their value from other signals
+  doubleCounter: Signal<number> = computed(() => this.counter() * 2);
+
+  // Increment the counter
+  increment() {
+    this.counter.set(this.counter() + 1);
+    // or
+    this.counter.update(value => value + 1); // update with previous value
+  }
+
+  // Decrement the counter
+  decrement() {
+    this.counter.set(this.counter() - 1);
+  }
+
+  // Signals are useful because they notify interested consumers when they change. 
+  // An effect is an operation that runs whenever one or more signal values change
+  constructor() {
+    effect(() => {
+      console.log('Counter value changed:', this.counter());
+    });
+  }
+}
 ```
 
 ## Component Lifecycle
