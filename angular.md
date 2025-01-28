@@ -519,9 +519,7 @@ export class DebounceService {
 import { DebounceService } from '../../services/debounce.service';
 
 export class Component() {
-    public constructor() {
-        private debounceService: DebounceService;
-    }
+    public constructor(private debounceService: DebounceService) { }
 
     onInputChange(event: any) {
         const value = event.target.value;
@@ -538,9 +536,51 @@ export class Component() {
 A subscription service listens to data streams or events and reacts to changes.
 It allows components to **subscribe** to asynchronous data sources.
 
+`BehaviorSubject`: A variant of Subject that requires an initial value and emits its current value whenever it is subscribed to.
+
 #### Definition
 
+```typescript
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SubscriptionService {
+  searchTerm = new BehaviorSubject<string>(''); // RxJS emitter
+
+  // Observables for other components to subscribe to
+  searchTerm$ = this.searchTerm.asObservable();
+
+  updateSearchTerm(term: string) {
+    console.log(`updateSearchTerm: ${term}`);
+    this.searchTerm.next(term);
+  }
+}
+```
+
 #### Usage
+
+```typescript
+import { SubscriptionService } from '../../services/subscription.service';
+
+export class Component() {
+    public constructor(private subscriptionService: SubscriptionService) {
+        this.subscriptionService.searchTerm$.subscribe((term: string) => {
+            console.log(searchTerm: ${term});
+        });
+    }
+
+    onInputChange(event: any) {
+        const value = event.target.value;
+
+        this.subscriptionService.updateSearchTerm(value);
+        // service notifies all subscribers when searchTerm changes
+        // use when multiple components need to know about a change in a value
+    }
+}
+```
 
 ## Forms
 
