@@ -787,16 +787,17 @@ export class AngularComponent {
 A **signal** is a wrapper around a value that notifies interested consumers when that value changes.
 Signals can contain any value, from primitives to complex data structures.
 You **read** a signal's value by calling its getter function, which allows Angular to track where the signal is used.
+- Signals are a new reactivity model to improve state management. 
+- Signals are similar to observables, 
+but they provide a simpler and more explicit mechanism for handling changes in application state.
 
 - **Writable** signal: provide an API for updating their values *directly*
 - **Computed** signal: **read-only** signals that derive their value *from other signals*
 
 ```typescript
-import { Component, computed, effect, signal, Signal, WritableSignal } from '@angular/core';
-/*  Signals are a new reactivity model to improve state management. 
-Signals are similar to observables, 
-but they provide a simpler and more explicit mechanism for handling changes in application state. */
-
+import { Component, computed, effect, 
+            signal, Signal, WritableSignal } from '@angular/core';
+            
 @Component({
   selector: 'app-singals',
   standalone: true,
