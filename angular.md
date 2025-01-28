@@ -32,6 +32,7 @@ Angular is a web framework for developing fast and reliable web applications bas
 | `./app.config.ts` | app configuration |
 | `./app.routes.ts` | router config |
 | `./app/components/componentName` | component folder |
+| `./app/services/serviceName.ts` | service |
 
 Component folder contains `.ts`, `.html`, `.spec.ts` & `.css`
 
@@ -297,6 +298,83 @@ export class AngularComponent implements OnInit {
 ```
 
 ### Services
+
+The component uses a service to retrieve photo data from a server
+- A service is an object that only exists once (singleton pattern)
+- To define a service, the decorator "Injectable" is used
+- To use a service, typically the constructor of the using class defines a property of the service type
+
+#### Definition
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+    providedIn: 'root'
+}) // make injectable/mark as injectable service
+export class apiService {
+    private url = '';
+
+    public constructor(
+        private httpClient: HttpClient // get, delete, patch, post, put
+    ) { }
+
+
+
+    // simple example
+    public get(): Observable<number[]> {
+        return this.httpClient.get(this.url) as Observable<number[]>;
+    }
+
+    // transform data and pass observable to caller
+    public getComplex(): Observable<boolean> {
+        const url = "";
+        const body = "";
+        const observable = new Observable<boolean>(subscriber => {
+            const serverCall = this.httpClient.post(url + "/", body); // this.httpClient.get(url)
+            serverCall.subscribe({
+                next: res => {
+                    console.log(res);
+                    subscriber.next(true); // yield result to caller of get()
+                },
+                error: err => {
+                    console.log(err);
+                    subscriber.next(false); // yield result to caller of get()
+                }
+            });
+        }); 
+        
+        return observable;
+    }
+}
+```
+
+#### Usage
+
+```typescript
+import { apiService } from '../../services/api.service.ts'
+
+export class Component {
+    public constructor(private service: apiService);
+
+    public useService() {
+        this.service.get()
+            .subscribe({
+                next: (result) => { /* success */ },
+                error: (err) => { /* fail */ }
+            });
+
+        // alternative:
+        this.service.get()
+            .subscribe((res: boolean) => {
+                if(res) { /* success */ }
+                else { /* fail */ }
+            });
+    }
+}
+```
 
 ### Intervals
 
