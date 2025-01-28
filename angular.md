@@ -113,6 +113,9 @@ export class AppComponent {
 
 <!--optional component binding, if not using router + redirect:-->
 <app-test></app-test>
+
+<!--can receive parameter if @Input is defined-->
+<app-test-module name="parameter"></app-test-module>
 ```
 
 #### app/app.config.ts
@@ -231,7 +234,7 @@ Router outlet not need if already included in `app.component.html`
 ### Basics
 
 ```typescript
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ngStyle, ngClass } from '@angular/common';
  
@@ -257,6 +260,8 @@ export class AngularComponent implements OnInit {
     public number: number = 0;
     public numbers: Example = new Example(3);
     public farbe: string = "red";
+
+    @Input() componentParameter!: String;
     
     public array1: number[];
     public array2: Array<number>;
@@ -483,7 +488,59 @@ export class AuthGuard implements CanActivate {
 
 ### Debounce
 
+Control how often an input-related action is triggered.
 
+#### Definition
+
+```typescript
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DebounceService {
+  private timers: { [key: string]: any } = {};
+
+  debounce(key: string, callback: () => void, delay: number = 300) {
+    if (this.timers[key]) {
+      clearTimeout(this.timers[key]);
+    }
+
+    this.timers[key] = setTimeout(() => {
+      callback();
+    }, delay);
+  }
+}
+```
+
+#### Usage
+
+```typescript
+import { DebounceService } from '../../services/debounce.service';
+
+export class Component() {
+    public constructor() {
+        private debounceService: DebounceService;
+    }
+
+    onInputChange(event: any) {
+        const value = event.target.value;
+
+        this.debounceService.debounce('search', () => {
+          this.search(value);
+        }, 300);  // 300ms debounce time
+    }
+}
+```
+
+### Subscription Service
+
+A subscription service listens to data streams or events and reacts to changes.
+It allows components to **subscribe** to asynchronous data sources.
+
+#### Definition
+
+#### Usage
 
 ## Forms
 
