@@ -10,3 +10,5 @@ pandoc ./ts.md -o ./ts.pdf --toc --toc-depth=3 --pdf-engine=pdflatex
 echo "Generated ts.pdf"
 pandoc ./rest.md -o ./rest.pdf --toc --toc-depth=3 --pdf-engine=pdflatex
 echo "Generated rest.pdf"
+pandoc ./angular.md -o ./angular.pdf --toc --toc-depth=3 --pdf-engine=pdflatex
+echo "Generated angular.pdf"
