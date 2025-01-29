@@ -12,12 +12,12 @@
 
 ### Attributes:
 - `className="validJS"`
-- `htmlFor`
+- `htmlFor="string"` <- for is a reserved JS keyword
 - `onClick={ () => fn() }`
 
 ### Conditional Rendering:
 - `{ bool ? "string" : "string" }` -> ternary expression
-- `{ bool && "string"}` -> essentially if statement
+- `{ bool && "string"}` -> basically if statement
 
 ### Map:
 ```javascript
