@@ -115,7 +115,7 @@ export class AppComponent {
 <app-test></app-test>
 
 <!--can receive parameter if @Input is defined-->
-<app-test-module name="parameter"></app-test-module>
+<app-test-module [parameterName]="parameter"></app-test-module>
 ```
 
 #### app/app.config.ts
@@ -236,7 +236,7 @@ Router outlet not need if already included in `app.component.html`
 ```typescript
 import { Component, OnInit, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { ngStyle, ngClass } from '@angular/common';
+import { NgStyle, NgClass } from '@angular/common';
  
 import { Location } from '@angular/common';
 import { someService } from "../../services/someService.service"
@@ -250,8 +250,8 @@ import { TestModuleComponent } from '../test-module.component'; // used in html
     imports: [
         // directive have to be imported here explicitly if used besides for typing
         TestModuleComponent, // for custom components
-        ngStyle, // for inline styling
-        ngClass, // for inline class
+        NgStyle, // for inline styling
+        NgClass, // for inline class
     ],
     templateUrl: './angular.component.html',
     styleUrls: ['./angular.component.css']
@@ -261,7 +261,7 @@ export class AngularComponent implements OnInit {
     public numbers: Example = new Example(3);
     public farbe: string = "red";
 
-    @Input() componentParameter!: String;
+    @Input() parameterName!: String;
     
     public array1: number[];
     public array2: Array<number>;
