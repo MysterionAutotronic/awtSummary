@@ -70,6 +70,37 @@ const [first2, , third2] = numbers;
 const [first3, ...rest] = numbers;
 ```
 
+### Instance Methods
+- `.at(index)`: return **item** at index
+- `.concat(array2)`: **concat** with other array
+- `.every(predicate)`: return `true` if **all** entries satisfy the predicate
+- `.fill(value, fromIndex, toIndex)`: **fill** array with a **static value**
+- `.filter(predicate)`: **filtered shallow copy**
+- `.find(predicate)`: return **first element** that satisfies the predicate
+- `.findIndex(predicate)`: return **index of first element** that satisfies the predicate
+- `.findLast(predicate)`: return **last element** that satisfies the predicate
+- `.findLastIndex(predicate)`: return **index of last element** that satisfies the predicate
+- `.forEach()`: execute function once for each element (`void`)
+- `.includes(value)`: return `true` if array contains provided value
+- `.indexOf(value)`: return index of values first occurrence
+- `.join('char')`: create and return `string` separated by char
+- `.lastIndexOf(value)`: return index of values last occurrence
+- `.map(function)`: mapping
+- `.pop()`: remove **last** element
+- `.push(value)`: add value to the **end** of the array
+- `.reduce((acc, elem) => { ... }, acc_start)`: use like foldl (left to right)
+- `.reduceRight((acc, elem) => { ... }, acc_start)`: use like foldr (right to left)
+- `.reverse()`: reverse in place
+- `.shift()`: remove and return **first value**
+- `.slice(start, end)`: copy from start index to end index (not included)
+- `.some(predicate)`: return `true` if at least one element is true
+- `.sort()`: sort (ascending string)
+- `.splice(start, deleteCount, item1, item2, ...itemN)`: from start delete and insert
+- `.toLocaleString()`: `toString()` that supports locales
+- `.toString`
+- `.unshift(val1, val2...)`: append values to the start of the array and return new length
+- `.with(index, value)`: replace value at index (return copy)
+
 ## Strings
 ```javascript
 let str = "Hello World";
