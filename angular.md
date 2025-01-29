@@ -227,6 +227,7 @@ Router outlet not need if already included in `app.component.html`
 <div [ngStyle]="{'background-color': farbe}"></div>
 <div [ngStyle]="{'background-color': 'red'}"></div>
 <div [ngClass]="boolean ? 'class1' : 'class2'"></div>
+<div [class]="stringVarInClass"></div>
 ```
 
 ## TypeScript Syntax
