@@ -159,11 +159,17 @@ function TodoItems({ todos, setTodos, onClick, children }) {
         Alternatively, you can directly map over the todos prop:
         <ul>
             {openTodos.map(todo => (
-                <li key={todo.id}>{ todo.description }</li>
+                <li key={todo.id}>
+                    { todo.description }
+                    <button className="done" onClick={() => handleDone(todo)}>done</button>
+                </li>
             ))}
         </ul>
         {children}
         <button onClick={onClick}>Click me</button>
+
+        if using parameter:
+        <button onClick={() => onClick(param)}>Click me</button>
       </>
     ); // render root element with heading and list of todos
 // OR
