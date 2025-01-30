@@ -17,6 +17,7 @@
 
 ### Conditional Rendering:
 - `{ bool ? "string" : "string" }` -> ternary expression
+- `{ bool ? <div></div> : <div></div> }` -> ternary expression
 - `{ bool && "string"}` -> basically if statement
 
 ### Map:
