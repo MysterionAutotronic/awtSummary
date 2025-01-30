@@ -64,7 +64,7 @@ if (todos.length === 0) {
         <>nothing to see here</>
     );
 }
-return ( <div></div>) // <- default return, won't render if todos.length === 0
+return (<div></div>) // <- default return, won't render if todos.length === 0
 ```
 
 ### Load Function on Component Load
@@ -75,6 +75,27 @@ doSmth();
 if (todos.length === 0) {
     doSmth();
 }
+```
+
+### EventHandler
+```javascript
+function f(e) {
+
+}
+const callback = (e) => {}
+
+const callback = (e, data) => {}
+
+return(
+    <Component onClick={() => f(e)}>
+
+    // both works
+    <Component onClick={callback}> // e will be passed automatically
+    <Component onClick={() => callback(e)}>
+    <Component onClick={() => callback(e, data)}>
+
+    <Component onKeyPress={}> // access with e.key e.g. "Enter"
+)
 ```
 
 ### Subcomponent
@@ -527,7 +548,7 @@ function AddTodoForm({ todos, setTodos }) {
         setDescription(value);
     };
 
-    const handleAdd = () => {
+    const handleAdd = (e) => {
         e.preventDefault();
         const newTodo = {
            id: Date.now(),
@@ -538,15 +559,14 @@ function AddTodoForm({ todos, setTodos }) {
         setDescription("");
     };
 
-
     return (
       <>
         <label htmlFor="new-todo-id">new todo:</label>
         <input type="text" id="new-todo-id" 
             value={description} 
-            onChange={() => handleDescriptionChange} 
+            onChange={handleDescriptionChange} 
         />
-        <button type="button" onClick={() => handleAdd}>add</button>
+        <button type="button" onClick={handleAdd}>add</button>
       </>
     );
 }
@@ -570,7 +590,7 @@ function AddTodoForm({ todos, setTodos }) {
         setForm({ ...form, description: value });
     };
 
-    const handleAdd = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const newTodo = {
             id: Date.now(),
@@ -581,12 +601,19 @@ function AddTodoForm({ todos, setTodos }) {
          // reset form if needed
     };
 
+    const handleKeyPress = (e) => {
+        if(e.key === "Enter") {
+            handleSubmit(e);
+        }
+    };
+
     return (
       <>
-        <form onSubmit={() => handleAdd}>
+        <form onSubmit={handleSubmit}>
             <input type="text" id="new-todo-id" 
                 value={description} 
-                onChange={() => handleDescriptionChange} 
+                onChange={handleDescriptionChange}
+                onKeyDown={handleKeyPress}
             />
             <button type="submit">add</button>
         </form>
