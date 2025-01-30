@@ -45,6 +45,11 @@ const element = <h1 style={style}>Styled Text</h1>;
 <h1 style={{ color: "blue", backgroundColor: "yellow" }}>Hello</h1>
 ```
 
+### Conditional Classes
+```javascript
+<h1 class={condition ? "class1" : "class2"}>Hello</h1>
+```
+
 ## Components
 
 - Can manage its internal state
