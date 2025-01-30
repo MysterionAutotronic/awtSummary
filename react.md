@@ -221,7 +221,7 @@ function Counter() {
   return (
     <div className="container">
       <p>Count: {count}</p>
-      <button onClick={handleClick}>Increment</button>
+      <button onClick={() => handleClick}>Increment</button>
     </div>
   );
 }
@@ -532,9 +532,9 @@ function AddTodoForm({ todos, setTodos }) {
         <label htmlFor="new-todo-id">new todo:</label>
         <input type="text" id="new-todo-id" 
             value={description} 
-            onChange={handleDescriptionChange} 
+            onChange={() => handleDescriptionChange} 
         />
-        <button type="button" onClick={handleAdd}>add</button>
+        <button type="button" onClick={() => handleAdd}>add</button>
       </>
     );
 }
@@ -571,10 +571,10 @@ function AddTodoForm({ todos, setTodos }) {
 
     return (
       <>
-        <form onSubmit={handleAdd}>
+        <form onSubmit={() => handleAdd}>
             <input type="text" id="new-todo-id" 
                 value={description} 
-                onChange={handleDescriptionChange} 
+                onChange={() => handleDescriptionChange} 
             />
             <button type="submit">add</button>
         </form>
