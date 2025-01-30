@@ -57,7 +57,7 @@ Example: Order 1234: 23 products with id 44533 ordered by customer with id 4711
 | 401 | Unauthorized |
 | 403 | Forbidden |
 | **404** | **Not Found** |
-| **409 | **Conflict** |
+| **409** | **Conflict** |
 | 500 | Internal Server Error |
 | 501 | Not Implemented |
 | 503 | Service Unavailable |
