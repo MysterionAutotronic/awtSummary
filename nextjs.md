@@ -138,3 +138,124 @@ export default function Loading() {
 ```
 
 - Has to be in the same folder as the `page.tsx` it is masking
+
+### use client vs. use server
+
+#### use client
+
+Forced to run **client side**
+
+For:
+- Hooks: `useState`, `useEffect`, `useContext`
+- Event listeners
+- API: `localStorage`, `window`, `document`
+
+```javascript
+'use client';
+
+import { useState } from 'react';
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+#### use server
+
+Explicitly a **server side function**
+
+For:
+- Fetching data from **database**
+- Handling **server side actions** (form submission...)
+- **Secure operations** (authentication...)
+- **Node APIs** (`fs`, `process.env`, ...)
+
+```javascript
+'use server';
+
+import { revalidatePath } from 'next/cache';
+
+export async function saveToDatabase(data) {
+  await db.collection('users').insertOne(data);
+  revalidatePath('/dashboard'); // Refresh data on the page
+}
+```
+
+## Syntax
+
+### useActionState Hook
+
+- `const [state, formAction, isPending] = useActionState(fn, initialState, permalink?);`
+- `fn`: **callback** for form submission or button press
+- `initialState`: any **serializable** value, ignored after first invocation
+- `useActionState` returns an **array** with the following values:
+    1. **current state** (`initialState` for first render) -> after invocation *value returned by action*
+    2. **new action** (can be passed as `action` prop to `form` component or `formAction` prop to any `button` component within the form, can also be *called manually* within `startTransition`)
+    3. `isPending` flag for *pending Transition*
+
+#### lib/auth.ts
+```typescript
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}
+```
+
+#### component.tsx
+```typescript
+const [errorMessage, formAction, isPending] = useActionState(
+    authenticate,
+    undefined,
+);
+
+return (
+    <form action={formAction}>
+      <input name="email" type="email" placeholder="Email" required/>
+      <input name="password" type="password" placeholder="Password" required/>
+      
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+      
+      <button type="submit" disabled={isPending}>
+        {isPending ? 'Logging in...' : 'Login'}
+      </button>
+    </form>
+  );
+```
+
+### Suspense
+
+`<Suspense>` wraps async component (e.g. **fetch** data) -> fallback UI (e.g. skeleton, spinner) while waiting
+
+Benefits:
+- **Streaming Server Rendering** - Progressively rendering HTML from the server to the client.
+- **Selective Hydration** - React prioritizes what components to make interactive first based on user interaction.
+
+```typescript
+import { Suspense } from 'react';
+
+return(
+    <Suspense fallback={<p>Loading feed...</p>}>
+            <PostFeed />
+    </Suspense>
+)
+```
