@@ -68,3 +68,4 @@ Example: Order 1234: 23 products with id 44533 ordered by customer with id 4711
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
 | getOrder(int id): Order | GET | order/:id | | Order | 200, 404 |
 | createOrder(o: Order): Order | POST | order | Order | Order | 201 |
+| getOrdersFilter(date): Order[] | GET | order/[?date=:date&...] |
