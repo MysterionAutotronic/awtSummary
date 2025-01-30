@@ -259,3 +259,45 @@ return(
     </Suspense>
 )
 ```
+
+## Styling
+
+- **Global** CSS files (imported in `app/layout.tsx`)
+- **Site specific** CSS files
+
+### Usage
+
+```typescript
+import styles from '@/app/ui/home.module.css';
+
+export default function Page() {
+    return (
+        <div className={styles.shape}/> // <- style.classname
+    )
+}
+```
+
+### Conditional Styling
+
+Conditional className Strings with **CLSX**
+
+Sometimes the CSS classes for an HTML element are dynamic depending on some state. With clsx() you can construct a dynamic list of strings in an easy to read way.
+
+```typescript
+<div
+    key={invoice.id} 
+    className={clsx('flex flex-row items-center justify-between py-4',
+        { 'border-t': i !== 0 })}
+/>
+```
+
+The DIV element above has fixed classes (flex ... py-4) and class "border-t" only if i !== 0 holds.
+
+### Environment
+
+.env:
+```ini
+DATABASE_URL=postgres://user:password@localhost:5432/mydatabase
+JWT_SECRET=my-super-secret-key
+...
+```
